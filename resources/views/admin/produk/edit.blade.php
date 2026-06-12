@@ -12,7 +12,7 @@
         border: 2px dashed var(--border); border-radius: 10px; padding: 16px;
         text-align: center; transition: all 0.2s; cursor: pointer; position: relative;
     }
-    .upload-preview-wrap:hover { border-color: var(--primary); background: #fff7ed; }
+    .upload-preview-wrap:hover { border-color: var(--primary); background: #f0f9ff; }
     .upload-preview-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .preview-img { max-width: 100%; max-height: 160px; border-radius: 8px; object-fit: cover; }
     input[type="checkbox"].toggle { appearance: none; width: 44px; height: 24px; background: #e7e5e4; border-radius: 12px; cursor: pointer; position: relative; transition: background 0.3s; }

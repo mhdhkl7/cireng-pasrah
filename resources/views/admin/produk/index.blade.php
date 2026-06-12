@@ -32,7 +32,7 @@
                                 <img src="{{ $produk->gambar_url }}" alt="{{ $produk->nama }}"
                                      style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--border);">
                             @else
-                                <div style="width:56px;height:56px;background:#fff7ed;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:1px solid var(--border);">
+                                <div style="width:56px;height:56px;background:#f0f9ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:1px solid var(--border);">
                                     🍟
                                 </div>
                             @endif

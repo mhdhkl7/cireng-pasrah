@@ -31,7 +31,7 @@
         padding: 10px 0; border-bottom: 1px solid var(--border);
     }
     .item-row:last-child { border-bottom: none; }
-    .item-thumb { width: 48px; height: 48px; border-radius: 8px; overflow: hidden; background: #fff7ed; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+    .item-thumb { width: 48px; height: 48px; border-radius: 8px; overflow: hidden; background: #f0f9ff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
     .item-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .item-name { font-weight: 700; font-size: 0.875rem; }
     .item-price { font-size: 0.75rem; color: var(--text-muted); }
@@ -86,7 +86,7 @@
     .bukti-actions { padding: 10px; display: flex; gap: 8px; background: var(--bg); }
 
     .stok-warning-box {
-        background: #fef3c7;
+        background: #ccfbf1;
         border: 1px solid #fde68a;
         border-radius: 8px;
         padding: 12px;
@@ -116,7 +116,7 @@
     </a>
 </div>
 
-<div style="background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid rgba(249,115,22,0.2);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+<div style="background:linear-gradient(135deg,#f0f9ff,#ccfbf1);border:1px solid rgba(14,165,233,0.2);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
     <div>
         <div style="font-size:1.1rem;font-weight:900;">🏷️ {{ $pesanan->kode_pesanan }}</div>
         <div style="font-size:0.78rem;color:var(--text-muted);margin-top:3px;">

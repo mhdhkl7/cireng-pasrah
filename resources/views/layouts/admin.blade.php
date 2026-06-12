@@ -269,7 +269,7 @@
 
         .alert-success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
         .alert-error   { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
-        .alert-warning { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .alert-warning { background: #ccfbf1; color: #92400e; border: 1px solid #fde68a; }
 
         /* Buttons */
         .btn {
@@ -346,13 +346,13 @@
             font-weight: 600;
         }
 
-        .badge-pending    { background: #fef3c7; color: #92400e; }
+        .badge-pending    { background: #ccfbf1; color: #92400e; }
         .badge-diproses   { background: #dbeafe; color: #1e40af; }
         .badge-siap       { background: #d1fae5; color: #065f46; }
         .badge-selesai    { background: #dcfce7; color: #14532d; }
         .badge-dibatalkan { background: #fee2e2; color: #991b1b; }
         .badge-lunas      { background: #d1fae5; color: #065f46; }
-        .badge-belum      { background: #fef3c7; color: #92400e; }
+        .badge-belum      { background: #ccfbf1; color: #92400e; }
 
         /* Form elements */
         .form-group {
@@ -384,7 +384,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(249,115,22,0.1);
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
         }
 
         .form-error {

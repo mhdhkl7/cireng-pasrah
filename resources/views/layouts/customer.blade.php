@@ -301,13 +301,13 @@
             font-weight: 600;
         }
 
-        .badge-pending    { background: #fef3c7; color: #92400e; }
+        .badge-pending    { background: #ccfbf1; color: #92400e; }
         .badge-diproses   { background: #dbeafe; color: #1e40af; }
         .badge-siap       { background: #d1fae5; color: #065f46; }
         .badge-selesai    { background: #dcfce7; color: #14532d; }
         .badge-dibatalkan { background: #fee2e2; color: #991b1b; }
         .badge-lunas      { background: #d1fae5; color: #065f46; }
-        .badge-belum      { background: #fef3c7; color: #92400e; }
+        .badge-belum      { background: #ccfbf1; color: #92400e; }
 
         /* Pagination */
         .pagination {

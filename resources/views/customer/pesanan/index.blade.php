@@ -4,7 +4,7 @@
 @section('styles')
 <style>
     .page-title { font-size: 1.5rem; font-weight: 800; color: #1c1917; margin-bottom: 6px; }
-    .page-title span { color: #f97316; }
+    .page-title span { color: #0ea5e9; }
     .page-subtitle { color: #78716c; font-size: 0.875rem; margin-bottom: 28px; }
 
     .pesanan-list { display: flex; flex-direction: column; gap: 16px; }
@@ -47,13 +47,13 @@
         padding: 4px 10px; border-radius: 20px;
         font-size: 0.72rem; font-weight: 600;
     }
-    .badge-pending    { background: #fef3c7; color: #92400e; }
+    .badge-pending    { background: #ccfbf1; color: #92400e; }
     .badge-diproses   { background: #dbeafe; color: #1e40af; }
     .badge-siap       { background: #d1fae5; color: #065f46; }
     .badge-selesai    { background: #dcfce7; color: #14532d; }
     .badge-dibatalkan { background: #fee2e2; color: #991b1b; }
     .badge-lunas      { background: #d1fae5; color: #065f46; }
-    .badge-belum      { background: #fef3c7; color: #92400e; }
+    .badge-belum      { background: #ccfbf1; color: #92400e; }
 
     .pesanan-body {
         padding: 16px 20px;
@@ -76,7 +76,7 @@
     .pesanan-total {
         font-size: 1rem;
         font-weight: 800;
-        color: #f97316;
+        color: #0ea5e9;
     }
 
     .pesanan-meta {
@@ -90,8 +90,8 @@
         align-items: center;
         gap: 6px;
         padding: 8px 14px;
-        background: #fff7ed;
-        color: #f97316;
+        background: #f0f9ff;
+        color: #0ea5e9;
         border-radius: 8px;
         font-size: 0.8rem;
         font-weight: 700;
@@ -99,7 +99,7 @@
         border: 1px solid #fed7aa;
         transition: all 0.2s;
     }
-    .btn-detail:hover { background: #f97316; color: #fff; }
+    .btn-detail:hover { background: #0ea5e9; color: #fff; }
 
     .empty-state {
         text-align: center;
@@ -117,7 +117,7 @@
         align-items: center;
         gap: 8px;
         padding: 12px 24px;
-        background: linear-gradient(135deg, #f97316, #ea580c);
+        background: linear-gradient(135deg, #0ea5e9, #10b981);
         color: #fff;
         border-radius: 12px;
         font-weight: 700;
@@ -162,7 +162,7 @@
                             <div><strong>{{ $detail->nama_produk }}</strong> x{{ $detail->qty }}</div>
                         @endforeach
                         @if($pesanan->detailPesanans->count() > 2)
-                            <div style="color:#f97316;">+{{ $pesanan->detailPesanans->count() - 2 }} item lainnya</div>
+                            <div style="color:#0ea5e9;">+{{ $pesanan->detailPesanans->count() - 2 }} item lainnya</div>
                         @endif
                     </div>
                     <div class="pesanan-info">

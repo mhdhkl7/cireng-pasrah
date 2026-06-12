@@ -18,7 +18,7 @@
         cursor: pointer;
         position: relative;
     }
-    .upload-preview-wrap:hover { border-color: var(--primary); background: #fff7ed; }
+    .upload-preview-wrap:hover { border-color: var(--primary); background: #f0f9ff; }
     .upload-preview-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .preview-img { max-width: 100%; max-height: 160px; border-radius: 8px; margin-top: 10px; object-fit: cover; display: none; }
     .preview-placeholder { font-size: 2rem; margin-bottom: 6px; }

@@ -40,7 +40,7 @@
                     <span style="font-weight:600;font-size:0.78rem;">{{ $user->created_at->format('d M Y') }}</span>
                 </div>
             </div>
-            <div style="margin-top:12px;padding:12px;background:#fff7ed;border-radius:8px;text-align:center;border:1px solid #fed7aa;">
+            <div style="margin-top:12px;padding:12px;background:#f0f9ff;border-radius:8px;text-align:center;border:1px solid #fed7aa;">
                 <div style="font-size:1.5rem;font-weight:800;color:var(--primary);">{{ $pesanans->total() }}</div>
                 <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">Total Pesanan</div>
             </div>

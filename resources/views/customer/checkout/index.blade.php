@@ -56,9 +56,9 @@
     }
     .form-control:focus {
         outline: none;
-        border-color: #f97316;
+        border-color: #0ea5e9;
         background: #fff;
-        box-shadow: 0 0 0 3px rgba(249,115,22,0.12);
+        box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
     }
     textarea.form-control { resize: vertical; min-height: 80px; }
 
@@ -99,10 +99,10 @@
         text-align: center;
     }
     .radio-option input:checked + .radio-label {
-        border-color: #f97316;
-        background: #fff7ed;
+        border-color: #0ea5e9;
+        background: #f0f9ff;
     }
-    .radio-label:hover { border-color: #f97316; background: #fff7ed; }
+    .radio-label:hover { border-color: #0ea5e9; background: #f0f9ff; }
     .radio-icon { font-size: 1.5rem; }
     .radio-title { font-size: 0.85rem; font-weight: 700; color: #1c1917; }
     .radio-desc { font-size: 0.72rem; color: #78716c; }
@@ -121,7 +121,7 @@
         transition: all 0.2s;
         position: relative;
     }
-    .upload-area:hover { border-color: #f97316; background: #fff7ed; }
+    .upload-area:hover { border-color: #0ea5e9; background: #f0f9ff; }
     .upload-area input[type="file"] {
         position: absolute;
         inset: 0;
@@ -169,7 +169,7 @@
     }
 
     .summary-header {
-        background: linear-gradient(135deg, #f97316, #ea580c);
+        background: linear-gradient(135deg, #0ea5e9, #10b981);
         padding: 18px 20px;
         color: #fff;
     }
@@ -198,12 +198,12 @@
         margin-top: 4px;
     }
     .summary-total .label { font-weight: 700; font-size: 1rem; }
-    .summary-total .value { font-weight: 800; color: #f97316; font-size: 1.15rem; }
+    .summary-total .value { font-weight: 800; color: #0ea5e9; font-size: 1.15rem; }
 
     .btn-order {
         width: 100%;
         padding: 14px;
-        background: linear-gradient(135deg, #f97316, #ea580c);
+        background: linear-gradient(135deg, #0ea5e9, #10b981);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -212,17 +212,17 @@
         cursor: pointer;
         font-family: 'Inter', sans-serif;
         margin-top: 16px;
-        box-shadow: 0 4px 15px rgba(249,115,22,0.3);
+        box-shadow: 0 4px 15px rgba(14,165,233,0.3);
         transition: all 0.2s;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
     }
-    .btn-order:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249,115,22,0.4); }
+    .btn-order:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(14,165,233,0.4); }
 
     .page-title { font-size: 1.5rem; font-weight: 800; color: #1c1917; margin-bottom: 6px; }
-    .page-title span { color: #f97316; }
+    .page-title span { color: #0ea5e9; }
     .page-subtitle { color: #78716c; font-size: 0.875rem; margin-bottom: 28px; }
 </style>
 @endsection

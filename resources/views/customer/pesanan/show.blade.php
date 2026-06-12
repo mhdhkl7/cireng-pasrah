@@ -8,7 +8,7 @@
         font-size: 0.83rem; color: #78716c; text-decoration: none;
         margin-bottom: 20px; font-weight: 500;
     }
-    .back-link:hover { color: #f97316; }
+    .back-link:hover { color: #0ea5e9; }
 
     .detail-layout {
         display: grid;
@@ -62,7 +62,7 @@
         z-index: 0;
     }
 
-    .timeline-item.done .timeline-line { background: #f97316; }
+    .timeline-item.done .timeline-line { background: #0ea5e9; }
 
     .timeline-dot {
         width: 36px; height: 36px;
@@ -77,14 +77,14 @@
     }
 
     .timeline-item.done .timeline-dot {
-        background: #fff7ed;
-        border-color: #f97316;
+        background: #f0f9ff;
+        border-color: #0ea5e9;
     }
 
     .timeline-item.active .timeline-dot {
-        background: linear-gradient(135deg, #f97316, #ea580c);
-        border-color: #f97316;
-        box-shadow: 0 0 0 4px rgba(249,115,22,0.2);
+        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 4px rgba(14,165,233,0.2);
     }
 
     .timeline-content {
@@ -118,7 +118,7 @@
         width: 48px; height: 48px;
         border-radius: 8px;
         overflow: hidden;
-        background: #fff7ed;
+        background: #f0f9ff;
         flex-shrink: 0;
         display: flex; align-items: center; justify-content: center;
         font-size: 1.25rem;
@@ -127,7 +127,7 @@
     .item-details { flex: 1; }
     .item-name { font-size: 0.875rem; font-weight: 700; color: #1c1917; }
     .item-price { font-size: 0.75rem; color: #78716c; }
-    .item-subtotal { font-size: 0.875rem; font-weight: 700; color: #f97316; }
+    .item-subtotal { font-size: 0.875rem; font-weight: 700; color: #0ea5e9; }
 
     /* Info Rows */
     .info-row {
@@ -147,13 +147,13 @@
         padding: 4px 10px; border-radius: 20px;
         font-size: 0.72rem; font-weight: 600;
     }
-    .badge-pending    { background: #fef3c7; color: #92400e; }
+    .badge-pending    { background: #ccfbf1; color: #92400e; }
     .badge-diproses   { background: #dbeafe; color: #1e40af; }
     .badge-siap       { background: #d1fae5; color: #065f46; }
     .badge-selesai    { background: #dcfce7; color: #14532d; }
     .badge-dibatalkan { background: #fee2e2; color: #991b1b; }
     .badge-lunas      { background: #d1fae5; color: #065f46; }
-    .badge-belum      { background: #fef3c7; color: #92400e; }
+    .badge-belum      { background: #ccfbf1; color: #92400e; }
 
     /* Total */
     .total-row {
@@ -165,7 +165,7 @@
         margin-top: 4px;
     }
     .total-label { font-size: 1rem; font-weight: 700; }
-    .total-value { font-size: 1.15rem; font-weight: 800; color: #f97316; }
+    .total-value { font-size: 1.15rem; font-weight: 800; color: #0ea5e9; }
 
     /* Bukti Transfer */
     .bukti-img {
@@ -181,8 +181,8 @@
 
     /* Header Pesanan */
     .pesanan-header-card {
-        background: linear-gradient(135deg, #fff7ed, #fef3c7);
-        border: 1px solid rgba(249,115,22,0.2);
+        background: linear-gradient(135deg, #f0f9ff, #ccfbf1);
+        border: 1px solid rgba(14,165,233,0.2);
         border-radius: 16px;
         padding: 20px;
         margin-bottom: 20px;
