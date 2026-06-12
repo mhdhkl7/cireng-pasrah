@@ -1,58 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cireng Pasrah 🍟
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi e-commerce sederhana dan modern berbasis **Laravel 13** yang dirancang khusus untuk manajemen penjualan, pemesanan, dan inventori produk olahan "Cireng Pasrah".
 
-## About Laravel
+Dibangun dengan antarmuka yang bersih, modern, dan sangat memanjakan mata menggunakan kombinasi gradasi biru-hijau (teal & cyan) yang nyaman untuk digunakan berlama-lama tanpa membuat mata lelah.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Panel Admin (Manajemen Toko)
+- **Dashboard Analitik**: Ringkasan total pendapatan, jumlah pesanan, dan tren penjualan.
+- **Manajemen Produk (Katalog)**: Tambah, edit, hapus varian cireng beserta harga dan deskripsinya.
+- **Manajemen Inventori**: Melacak stok bahan baku seperti Cireng Mentah, Tepung Tapioka, dan Minyak Goreng. 
+- **Manajemen Pesanan**: Memantau status pemesanan pelanggan, dari "Menunggu Konfirmasi" hingga "Selesai".
+- **Manajemen Pelanggan**: Melihat daftar pelanggan yang terdaftar di dalam sistem.
 
-## Learning Laravel
+### 2. Panel Customer (Pelanggan)
+- **Katalog Produk**: Tampilan daftar cireng yang modern, dengan deskripsi lengkap dan harga.
+- **Keranjang Belanja**: Menambahkan produk ke keranjang sebelum melakukan *checkout*.
+- **Checkout & Pemesanan**: Proses penyelesaian pesanan yang sederhana.
+- **Riwayat Pesanan**: Pelanggan dapat melacak status pesanan mereka secara langsung.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. Autentikasi Terintegrasi
+- Login dan Register yang dilengkapi dengan validasi *server-side*.
+- Pemisahan hak akses otomatis (RBAC) antara `admin` dan `customer`.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🛠️ Teknologi yang Digunakan
 
-## Agentic Development
+- **Backend**: [Laravel 13.x](https://laravel.com/) (PHP 8.4)
+- **Database**: MySQL (dijalankan menggunakan Laragon)
+- **Frontend**: Blade Templating Engine + Vanilla CSS (Custom Design System, Flexbox/Grid, Glassmorphism UI)
+- **Fonts**: Google Fonts (Inter)
+- **Icons**: Emoji & Custom SVG
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
 
+## ⚙️ Cara Instalasi (Local Development)
+
+Ikuti langkah-langkah di bawah ini untuk menjalankan project ini di komputer lokal Anda:
+
+### 1. Persyaratan Sistem
+- PHP >= 8.2 (Disarankan PHP 8.4)
+- Composer 2.x
+- Node.js & npm (Opsional, jika menggunakan Vite secara penuh)
+- Laragon / XAMPP / Database MySQL apa saja
+
+### 2. Langkah Instalasi
+
+Clone repositori ini, lalu masuk ke dalam folder proyek:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/username-anda/cireng-pasrah.git
+cd cireng-pasrah
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Instal dependensi PHP melalui Composer:
+```bash
+composer install
+```
 
-## Contributing
+Salin file `.env.example` menjadi `.env` dan atur konfigurasi database Anda:
+```bash
+cp .env.example .env
+```
+*Buka file `.env` dan pastikan konfigurasi `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD` sudah sesuai dengan lokal Anda.*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Generate *Application Key* Laravel:
+```bash
+php artisan key:generate
+```
 
-## Code of Conduct
+Jalankan Migrasi Database beserta Seeder (Data Awal):
+```bash
+php artisan migrate:fresh --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Menjalankan Server Lokal
+Jalankan perintah ini untuk menyalakan *development server*:
+```bash
+php artisan serve
+```
+Aplikasi bisa diakses melalui browser di alamat: **`http://127.0.0.1:8000`**
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🔑 Akun Default (Seeder)
 
-## License
+Setelah menjalankan `php artisan migrate:fresh --seed`, Anda dapat menggunakan akun di bawah ini untuk masuk:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Administrator
+- **Nama**: Pak Haikal
+- **Email**: `admin@cireng.shop`
+- **Password**: `password123`
+
+### Pelanggan (Customer)
+Anda dapat menggunakan akun salah satu pelanggan di bawah ini:
+- `prasetyoaditama@cireng.shop`
+- `aditiarach@cireng.shop`
+- `rehanpratamapasaribu@cireng.shop`
+- `steephenparnaehansitumeang@cireng.shop`
+- `richardpangihutansimanjuntak@cireng.shop`
+- `walriansihombing@cireng.shop`
+
+**Password untuk semua pelanggan**: `password123`
+
+*(Alamat default semua pelanggan diatur di kota **Medan**).*
+
+---
+
+## 📂 Struktur Database Utama
+
+1. `users` - Menyimpan data admin dan pelanggan.
+2. `produks` - Menyimpan daftar menu cireng (Cireng Original, Keju, dll).
+3. `inventoris` - Menyimpan stok barang (Cireng mentah, tepung, minyak).
+4. `pesanans` - Data *header* pesanan yang dilakukan pelanggan.
+5. `detail_pesanans` - Rincian item produk di dalam satu pesanan.
+
+---
+
+## 📄 Lisensi
+
+Aplikasi Cireng Pasrah ini adalah perangkat lunak *open-source* yang dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
+
+*(Dibuat dengan ❤️ untuk kemajuan bisnis Cireng Pasrah)*
