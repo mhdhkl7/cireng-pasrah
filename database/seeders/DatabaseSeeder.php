@@ -46,36 +46,42 @@ class DatabaseSeeder extends Seeder
         }
 
         // === PRODUK CIRENG ===
-            $produks = [
+        $produks = [
             [
                 'nama'      => 'Cireng Original',
                 'deskripsi' => 'Cireng klasik dengan tepung aci pilihan, renyah di luar dan kenyal di dalam. Cocok dinikmati dengan saus kacang pedas.',
                 'harga'     => 3000,
+                'gambar'    => 'images/produks/cireng_original.png',
             ],
             [
                 'nama'      => 'Cireng Isi Ayam Pedas',
                 'deskripsi' => 'Cireng premium dengan isian ayam suwir berbumbu pedas gurih. Dijamin bikin ketagihan!',
                 'harga'     => 5000,
+                'gambar'    => 'images/produks/cireng_ayam_pedas.png',
             ],
             [
                 'nama'      => 'Cireng Isi Keju',
                 'deskripsi' => 'Perpaduan sempurna cireng renyah dengan isian keju mozzarella yang meleleh. Favorit anak-anak!',
                 'harga'     => 5000,
+                'gambar'    => 'images/produks/cireng_keju.png',
             ],
             [
                 'nama'      => 'Cireng Isi Abon',
                 'deskripsi' => 'Cireng dengan isian abon sapi pilihan yang gurih dan empuk. Pilihan yang mengenyangkan.',
                 'harga'     => 4500,
+                'gambar'    => 'images/produks/cireng_abon.png',
             ],
             [
                 'nama'      => 'Cireng Bumbu Rujak',
                 'deskripsi' => 'Cireng original yang disajikan dengan bumbu rujak khas Sunda. Asam, manis, dan pedas!',
                 'harga'     => 4000,
+                'gambar'    => 'images/produks/cireng_rujak.png',
             ],
             [
                 'nama'      => 'Cireng Isi Daging BBQ',
                 'deskripsi' => 'Cireng premium dengan isian daging sapi bumbu BBQ yang lezat dan mengenyangkan.',
                 'harga'     => 6000,
+                'gambar'    => 'images/produks/cireng_bbq.png',
             ],
         ];
 
@@ -85,7 +91,7 @@ class DatabaseSeeder extends Seeder
                 'slug'      => Str::slug($data['nama']),
                 'deskripsi' => $data['deskripsi'],
                 'harga'     => $data['harga'],
-                'gambar'    => null,
+                'gambar'    => $data['gambar'],
                 'is_active' => true,
             ]);
         }

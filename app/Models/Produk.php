@@ -54,7 +54,7 @@ class Produk extends Model
     public function getGambarUrlAttribute(): string
     {
         if ($this->gambar) {
-            return asset('storage/' . $this->gambar);
+            return asset($this->gambar);
         }
         return asset('images/no-image.png');
     }
