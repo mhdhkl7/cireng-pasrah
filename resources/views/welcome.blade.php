@@ -52,7 +52,7 @@
         .brand-text h1 {
             font-size: 1.25rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #0284c7, #0d9488);
+            background: var(--primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.1;
@@ -75,7 +75,7 @@
         }
 
         .nav-links a.primary {
-            background: linear-gradient(135deg, #0284c7, #0d9488);
+            background: var(--primary);
             color: #fff;
             border: none;
             box-shadow: 0 4px 12px rgba(2,132,199,0.3);
@@ -107,7 +107,7 @@
         }
 
         .hero h2 span {
-            background: linear-gradient(135deg, #0284c7, #0d9488);
+            background: var(--primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -125,7 +125,7 @@
             align-items: center;
             gap: 10px;
             padding: 16px 32px;
-            background: linear-gradient(135deg, #0284c7, #0d9488);
+            background: var(--primary);
             color: #fff;
             font-size: 1.1rem;
             font-weight: 700;

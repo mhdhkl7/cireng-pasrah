@@ -12,9 +12,9 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --primary: #0ea5e9;
-            --primary-dark: #0284c7;
-            --primary-light: #e0f2fe;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
             --primary-lighter: #bae6fd;
             --secondary-color: #10b981;
             --secondary-dark: #059669;
@@ -28,13 +28,11 @@
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --radius: 16px;
+            --radius: 12px;
             --radius-sm: 8px;
             --shadow: 0 1px 3px rgba(14,165,233,0.08), 0 1px 2px rgba(16,185,129,0.04);
             --shadow-md: 0 4px 6px -1px rgba(14,165,233,0.10), 0 2px 4px -1px rgba(16,185,129,0.06);
             --shadow-lg: 0 20px 25px -5px rgba(14,165,233,0.12), 0 10px 10px -5px rgba(16,185,129,0.05);
-            --gradient: linear-gradient(135deg, #0ea5e9, #10b981);
-            --gradient-light: linear-gradient(135deg, #e0f2fe, #d1fae5);
         }
 
         body {
@@ -76,7 +74,7 @@
 
         .brand-logo {
             width: 48px; height: 48px;
-            background: var(--gradient);
+            background: var(--primary);
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
@@ -98,10 +96,7 @@
         .brand-text h1 {
             font-size: 1.05rem;
             font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
             line-height: 1.1;
         }
 
@@ -131,17 +126,17 @@
         }
 
         .nav-link:hover {
-            background: var(--gradient-light);
+            background: var(--primary-light);
             color: var(--primary-dark);
         }
         .nav-link.active {
-            background: var(--gradient-light);
+            background: var(--primary-light);
             color: var(--primary-dark);
             box-shadow: 0 2px 8px rgba(14,165,233,0.15);
         }
 
         .cart-badge {
-            background: var(--gradient);
+            background: var(--primary);
             color: #fff;
             border-radius: 50%;
             width: 18px; height: 18px;
@@ -231,12 +226,8 @@
             line-height: 1.4;
         }
 
-        .btn-primary {
-            background: var(--gradient);
-            color: #fff;
-            box-shadow: 0 4px 12px rgba(14,165,233,0.3);
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(14,165,233,0.4); }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
         .btn-outline {
             background: transparent;
@@ -249,7 +240,7 @@
         .btn-danger:hover { background: #b91c1c; }
 
         .btn-secondary { background: #f8fafc; color: var(--text); border: 1px solid var(--border); }
-        .btn-secondary:hover { background: var(--border); }
+        .btn-secondary:hover { background: #f1f5f9; }
 
         .btn-sm { padding: 6px 12px; font-size: 0.78rem; }
         .btn-block { width: 100%; justify-content: center; }
@@ -335,11 +326,11 @@
         }
 
         .pagination a:hover { border-color: var(--primary); color: var(--primary); }
-        .pagination .active-page { background: var(--gradient); color: #fff; border-color: var(--primary); }
+        .pagination .active-page { background: var(--primary); color: #fff; border-color: var(--primary); }
 
         /* Footer */
         .footer {
-            background: linear-gradient(135deg, #0f172a, #0c1a2e);
+            background: #0f172a;
             color: #94a3b8;
             text-align: center;
             padding: 24px;
@@ -395,6 +386,11 @@
                     📋 Pesanan Saya
                 </a>
 
+                <a href="{{ route('profil.index') }}"
+                   class="nav-link {{ request()->routeIs('profil.*') ? 'active' : '' }}">
+                    👤 Profil
+                </a>
+
                 <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                     @csrf
                     <button type="submit" class="btn-nav-logout">🚪 Logout</button>
@@ -402,6 +398,16 @@
             </div>
         </div>
     </nav>
+
+    {{-- Session Timeout Warning --}}
+    <div id="session-warning" style="display:none;position:fixed;bottom:20px;right:20px;z-index:999;background:#1c1917;color:#fff;padding:14px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.25);font-size:0.83rem;max-width:280px;">
+        <div style="font-weight:700;margin-bottom:4px;">⏰ Sesi akan berakhir!</div>
+        <div>Tidak ada aktivitas selama <strong id="idle-minutes">14</strong> menit. Sesi otomatis berakhir dalam <strong id="countdown">60</strong> detik.</div>
+        <button onclick="document.getElementById('session-warning').style.display='none'; resetIdle();"
+                style="margin-top:10px;width:100%;padding:7px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">
+            Tetap Login
+        </button>
+    </div>
 
     <!-- Page Body -->
     <main>
@@ -425,5 +431,44 @@
     </footer>
 
     @yield('scripts')
+<script>
+// Session Idle Warning (14 menit warning, 15 menit server logout)
+(function() {
+    const IDLE_WARN_MS  = 14 * 60 * 1000; // warn at 14 min
+    const WARN_DURATION = 60; // 60 seconds countdown
+    let idleTimer, countdownTimer, countdown;
+    const warning  = document.getElementById('session-warning');
+    const countEl  = document.getElementById('countdown');
+
+    function resetIdle() {
+        clearTimeout(idleTimer);
+        clearInterval(countdownTimer);
+        if (warning) warning.style.display = 'none';
+        idleTimer = setTimeout(showWarning, IDLE_WARN_MS);
+    }
+
+    function showWarning() {
+        if (!warning) return;
+        countdown = WARN_DURATION;
+        warning.style.display = 'block';
+        countdownTimer = setInterval(function() {
+            countdown--;
+            if (countEl) countEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownTimer);
+                window.location.reload(); // Server will logout on next request
+            }
+        }, 1000);
+    }
+
+    // Events that reset idle timer
+    ['mousemove','keydown','click','scroll','touchstart'].forEach(function(e) {
+        document.addEventListener(e, resetIdle, true);
+    });
+
+    resetIdle(); // Start timer
+    window.resetIdle = resetIdle;
+})();
+</script>
 </body>
 </html>

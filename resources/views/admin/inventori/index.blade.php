@@ -31,9 +31,9 @@
         border-radius: 4px;
         transition: width 1s ease;
     }
-    .stok-bar.ok       { background: linear-gradient(to right, #10b981, #059669); }
-    .stok-bar.low      { background: linear-gradient(to right, #f59e0b, #d97706); }
-    .stok-bar.critical { background: linear-gradient(to right, #ef4444, #dc2626); }
+    .stok-bar.ok       { background: var(--success); }
+    .stok-bar.low      { background: var(--warning); }
+    .stok-bar.critical { background: var(--danger); }
 
     .stok-number { font-size: 1.1rem; font-weight: 800; }
     .stok-number.ok       { color: #059669; }

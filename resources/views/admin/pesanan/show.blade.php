@@ -47,12 +47,10 @@
         border-radius: var(--radius);
         border: 1px solid var(--border);
         overflow: hidden;
-        position: sticky;
-        top: 80px;
     }
 
     .status-header {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        background: var(--primary);
         padding: 16px 20px;
         color: #fff;
         font-weight: 700;
@@ -106,6 +104,22 @@
         font-weight: 600;
         text-align: center;
     }
+
+    .refund-alert-box {
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 0.83rem;
+        color: #991b1b;
+        font-weight: 600;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .badge-tidak_diambil { background: #fef3c7; color: #92400e; }
 </style>
 @endsection
 
@@ -116,18 +130,48 @@
     </a>
 </div>
 
-<div style="background:linear-gradient(135deg,#f0f9ff,#ccfbf1);border:1px solid rgba(14,165,233,0.2);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+{{-- Alert: Perlu Refund --}}
+@if($pesanan->perlu_refund)
+    <div class="refund-alert-box">
+        <span style="font-size:1.5rem;">⚠️</span>
+        <div>
+            <div>Pesanan ini <strong>sudah Lunas</strong> tapi statusnya <strong>{{ $pesanan->status_label }}</strong>.</div>
+            <div style="font-size:0.78rem;margin-top:3px;">Harap proses <strong>refund / pengembalian dana</strong> kepada customer.</div>
+        </div>
+    </div>
+@endif
+
+{{-- Alert: Take Away Terlambat --}}
+@if($pesanan->terlambat_diambil)
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:14px;margin-bottom:16px;font-size:0.83rem;color:#92400e;font-weight:600;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:1.5rem;">⏰</span>
+        <div>
+            <div>Pesanan Take Away ini sudah <strong>siap {{ $pesanan->siap_at?->diffForHumans() }}</strong> tapi belum diambil!</div>
+            <div style="font-size:0.78rem;margin-top:3px;">Pertimbangkan untuk menandai sebagai "Tidak Diambil".</div>
+        </div>
+    </div>
+@endif
+
+<div style="background:#f0f9ff;border:1px solid rgba(14,165,233,0.2);border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
     <div>
         <div style="font-size:1.1rem;font-weight:900;">🏷️ {{ $pesanan->kode_pesanan }}</div>
         <div style="font-size:0.78rem;color:var(--text-muted);margin-top:3px;">
             {{ $pesanan->created_at->format('l, d F Y - H:i') }} WIB
         </div>
+        @if($pesanan->siap_at)
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">
+                Siap sejak: {{ $pesanan->siap_at->format('d M Y, H:i') }} ({{ $pesanan->siap_at->diffForHumans() }})
+            </div>
+        @endif
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <span class="badge badge-{{ $pesanan->status }}">{{ $pesanan->status_label }}</span>
         <span class="badge {{ $pesanan->status_pembayaran === 'lunas' ? 'badge-lunas' : 'badge-belum' }}">
             {{ $pesanan->status_pembayaran === 'lunas' ? '✅ Lunas' : '⏳ Belum Bayar' }}
         </span>
+        @if($pesanan->opsi_pengiriman === 'delivery' && $pesanan->metode_pembayaran === 'cod')
+            <span class="badge" style="background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;">🚗 COD</span>
+        @endif
     </div>
 </div>
 
@@ -203,7 +247,7 @@
                 @endif
                 <div class="info-row">
                     <span class="info-key">Metode Pembayaran</span>
-                    <span class="info-val">{{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : '📱 Transfer Bank/E-Wallet' }}</span>
+                    <span class="info-val">{{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : ($pesanan->metode_pembayaran === 'cod' ? '🚗 COD' : '📱 Transfer Bank/E-Wallet') }}</span>
                 </div>
                 @if($pesanan->catatan)
                     <div class="info-row" style="align-items:flex-start;">
@@ -213,10 +257,45 @@
                 @endif
             </div>
         </div>
+
+        {{-- Info Driver (jika delivery) --}}
+        @if($pesanan->opsi_pengiriman === 'delivery')
+        <div class="card" style="margin-top:16px;">
+            <div class="card-header">
+                <div class="card-title">🚗 Info Driver</div>
+            </div>
+            <div class="card-body">
+                @if($pesanan->driver)
+                    <div class="info-row">
+                        <span class="info-key">Driver</span>
+                        <span class="info-val" style="color:var(--primary);font-weight:700;">{{ $pesanan->driver->name }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Telepon Driver</span>
+                        <span class="info-val">{{ $pesanan->driver->phone ?? '-' }}</span>
+                    </div>
+                    @if($pesanan->diambil_driver_at)
+                        <div class="info-row">
+                            <span class="info-key">Diambil pada</span>
+                            <span class="info-val">{{ $pesanan->diambil_driver_at->format('d M Y, H:i') }}</span>
+                        </div>
+                    @endif
+                @else
+                    <div style="text-align:center;padding:14px;color:#78716c;">
+                        @if($pesanan->status === 'mencari_driver')
+                            <div>🔍 Sedang mencari driver dari pool...</div>
+                        @else
+                            <div>Belum ada driver yang ditugaskan</div>
+                        @endif
+                    </div>
+                @endif
+            </div>
+        </div>
+        @endif
     </div>
 
     <!-- Right Column -->
-    <div>
+    <div style="position: sticky; top: 80px; align-self: start;">
         <!-- Update Status Form -->
         <div class="status-card" style="margin-bottom:16px;">
             <div class="status-header">⚙️ Update Status Pesanan</div>
@@ -232,12 +311,16 @@
                     <div class="form-group">
                         <label class="form-label">Status Pesanan</label>
                         <select name="status" class="form-control">
-                            <option value="pending"    {{ $pesanan->status === 'pending'    ? 'selected' : '' }}>🕐 Pending</option>
-                            <option value="diproses"   {{ $pesanan->status === 'diproses'   ? 'selected' : '' }}>👩‍🍳 Diproses</option>
-                            <option value="siap"       {{ $pesanan->status === 'siap'       ? 'selected' : '' }}>✅ Siap Diambil/Dikirim</option>
-                            <option value="selesai"    {{ $pesanan->status === 'selesai'    ? 'selected' : '' }}>🎉 Selesai</option>
-                            <option value="dibatalkan" {{ $pesanan->status === 'dibatalkan' ? 'selected' : '' }}>❌ Dibatalkan</option>
+                            <option value="pending"          {{ $pesanan->status === 'pending'          ? 'selected' : '' }}>🕐 Pending</option>
+                            <option value="diproses"         {{ $pesanan->status === 'diproses'         ? 'selected' : '' }}>👩‍🍳 Diproses</option>
+                            <option value="siap"             {{ $pesanan->status === 'siap'             ? 'selected' : '' }}>✅ Siap (→ pool driver jika delivery)</option>
+                            <option value="selesai"          {{ $pesanan->status === 'selesai'          ? 'selected' : '' }}>🎉 Selesai</option>
+                            <option value="dibatalkan"       {{ $pesanan->status === 'dibatalkan'       ? 'selected' : '' }}>❌ Dibatalkan</option>
+                            <option value="tidak_diambil"   {{ $pesanan->status === 'tidak_diambil'   ? 'selected' : '' }}>📦 Tidak Diambil</option>
                         </select>
+                        @if($pesanan->opsi_pengiriman === 'delivery')
+                            <div style="font-size:0.72rem;color:#78716c;margin-top:4px;">ℹ️ Mengubah ke "Siap" akan otomatis masuk pool driver</div>
+                        @endif
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label">Status Pembayaran</label>
@@ -245,6 +328,12 @@
                             <option value="belum_dibayar" {{ $pesanan->status_pembayaran === 'belum_dibayar' ? 'selected' : '' }}>⏳ Belum Dibayar</option>
                             <option value="lunas"         {{ $pesanan->status_pembayaran === 'lunas'         ? 'selected' : '' }}>✅ Lunas</option>
                         </select>
+                    </div>
+                    <div class="form-group" style="margin-top:14px;margin-bottom:0;" id="catatan-batal-wrap">
+                        <label class="form-label">Catatan Pembatalan / Refund</label>
+                        <textarea name="catatan_pembatalan" class="form-control" rows="2"
+                                  placeholder="Alasan pembatalan atau info refund..."
+                                  style="font-size:0.83rem;">{{ $pesanan->catatan_pembatalan }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width:100%;margin-top:16px;">
                         💾 Simpan Perubahan

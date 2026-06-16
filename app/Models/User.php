@@ -38,6 +38,11 @@ class User extends Authenticatable
         return $this->role === 'customer';
     }
 
+    public function isDriver(): bool
+    {
+        return $this->role === 'driver';
+    }
+
     public function pesanans()
     {
         return $this->hasMany(Pesanan::class);

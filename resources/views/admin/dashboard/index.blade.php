@@ -102,7 +102,7 @@
 
     .bar {
         width: 100%;
-        background: linear-gradient(to top, #10b981, #0ea5e9);
+        background: var(--primary);
         border-radius: 4px 4px 0 0;
         min-height: 4px;
         transition: all 0.5s ease;
@@ -255,7 +255,7 @@
                     <div class="bar-group">
                         <div class="bar-wrap">
                             <div class="bar"
-                                 style="height: {{ ($point['value'] / $maxPend) * 100 }}%; background: linear-gradient(to top, #059669, #10b981);"
+                                 style="height: {{ ($point['value'] / $maxPend) * 100 }}%; background: var(--success);"
                                  data-value="Rp {{ number_format($point['value'], 0, ',', '.') }}">
                             </div>
                         </div>

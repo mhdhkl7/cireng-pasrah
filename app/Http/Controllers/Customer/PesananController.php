@@ -10,7 +10,7 @@ class PesananController extends Controller
     public function index()
     {
         $pesanans = Pesanan::where('user_id', auth()->id())
-            ->with('detailPesanans')
+            ->with(['detailPesanans.produk'])  // load produk untuk gambar (#9)
             ->latest()
             ->paginate(10);
 

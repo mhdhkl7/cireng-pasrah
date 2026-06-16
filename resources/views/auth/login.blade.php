@@ -8,15 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --primary: #0284c7;
-            --primary-dark: #0d9488;
-            --danger: #dc2626;
-        }
+        :root { --primary: #2563eb; --primary-dark: #1d4ed8; --danger: #dc2626; }
         body {
             font-family: 'Inter', sans-serif;
+            background: #f8fafc;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f0f9ff 0%, #ccfbf1 50%, #e0f2fe 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -57,7 +53,7 @@
 
         .logo-icon {
             width: 72px; height: 72px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary);
             border-radius: 20px;
             display: inline-flex; align-items: center; justify-content: center;
             font-size: 2rem;
@@ -148,6 +144,38 @@
             box-shadow: 0 0 0 3px rgba(2,132,199,0.12);
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 44px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #a8a29e;
+            font-size: 1rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: var(--primary); }
+
+        .alert-warning {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            padding: 11px 14px;
+            border-radius: 10px;
+            font-size: 0.83rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
         .form-error {
             font-size: 0.75rem;
             color: var(--danger);
@@ -179,8 +207,8 @@
         .btn-auth {
             width: 100%;
             padding: 13px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
+            background: var(--primary);
+            color: #ffffff;
             border: none;
             border-radius: 12px;
             font-size: 0.95rem;
@@ -250,6 +278,18 @@
                 </div>
             @endif
 
+            @if(session('error'))
+                <div class="alert-warning">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="alert-error" style="background:#d1fae5;border-color:#a7f3d0;color:#065f46;">
+                    ✅ {{ session('success') }}
+                </div>
+            @endif
+
             <form method="POST" action="{{ route('login.post') }}" id="form-login">
                 @csrf
 
@@ -272,15 +312,18 @@
 
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        class="form-control"
-                        placeholder="Masukkan password"
-                        autocomplete="current-password"
-                        required
-                    >
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            class="form-control"
+                            placeholder="Masukkan password"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePwd('password', this)" title="Lihat/Sembunyikan Password">👁️</button>
+                    </div>
                     @error('password')
                         <div class="form-error">⚠️ {{ $message }}</div>
                     @enderror
@@ -301,5 +344,19 @@
             </div>
         </div>
     </div>
+<script>
+function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🔒';
+        btn.title = 'Sembunyikan Password';
+    } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+        btn.title = 'Lihat Password';
+    }
+}
+</script>
 </body>
 </html>

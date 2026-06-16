@@ -8,11 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --primary: #0284c7; --primary-dark: #0d9488; --danger: #dc2626; }
+        :root { --primary: #2563eb; --primary-dark: #1d4ed8; --danger: #dc2626; }
         body {
             font-family: 'Inter', sans-serif;
+            background: #f8fafc;
             min-height: 100vh;
-            background: linear-gradient(135deg, #f0f9ff 0%, #ccfbf1 50%, #e0f2fe 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -36,7 +36,7 @@
 
         .logo-icon {
             width: 64px; height: 64px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary);
             border-radius: 18px;
             display: inline-flex; align-items: center; justify-content: center;
             font-size: 1.75rem;
@@ -94,11 +94,32 @@
 
         .form-error { font-size: 0.75rem; color: var(--danger); margin-top: 4px; }
 
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .form-control {
+            padding-right: 44px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #a8a29e;
+            font-size: 1rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: var(--primary); }
+
         .btn-auth {
             width: 100%;
             padding: 13px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
+            background: var(--primary);
+            color: #ffffff;
             border: none;
             border-radius: 12px;
             font-size: 0.95rem;
@@ -183,8 +204,11 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="password" class="form-label">Password <span class="required">*</span></label>
-                        <input type="password" name="password" id="password" class="form-control"
-                               placeholder="Min. 8 karakter" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="password" id="password" class="form-control"
+                                   placeholder="Min. 8 karakter" required>
+                            <button type="button" class="toggle-password" onclick="togglePwd('password', this)" title="Lihat Password">👁️</button>
+                        </div>
                         @error('password')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
@@ -192,8 +216,11 @@
 
                     <div class="form-group">
                         <label for="password_confirmation" class="form-label">Konfirmasi Password <span class="required">*</span></label>
-                        <input type="password" name="password_confirmation" id="password_confirmation"
-                               class="form-control" placeholder="Ulangi password" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                   class="form-control" placeholder="Ulangi password" required>
+                            <button type="button" class="toggle-password" onclick="togglePwd('password_confirmation', this)" title="Lihat Password">👁️</button>
+                        </div>
                     </div>
                 </div>
 
@@ -211,5 +238,19 @@
             </div>
         </div>
     </div>
+<script>
+function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🔒';
+        btn.title = 'Sembunyikan Password';
+    } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+        btn.title = 'Lihat Password';
+    }
+}
+</script>
 </body>
 </html>

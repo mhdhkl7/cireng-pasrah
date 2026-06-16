@@ -7,7 +7,7 @@
         text-align: center;
         margin-bottom: 36px;
         padding: 40px 24px;
-        background: linear-gradient(135deg, #e0f2fe, #d1fae5);
+        background: #e0f2fe;
         border-radius: 20px;
         border: 1px solid rgba(14,165,233,0.15);
         position: relative;
@@ -28,7 +28,7 @@
         position: relative;
     }
     .page-header h2 span { 
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -64,7 +64,7 @@
     .produk-img-wrap {
         aspect-ratio: 4/3;
         overflow: hidden;
-        background: linear-gradient(135deg, #e0f2fe, #d1fae5);
+        background: #e0f2fe;
         position: relative;
     }
 
@@ -137,7 +137,7 @@
     .btn-add-cart {
         flex: 1;
         padding: 9px 14px;
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         color: #fff;
         border: none;
         border-radius: 10px;

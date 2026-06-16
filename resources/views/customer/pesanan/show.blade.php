@@ -82,7 +82,7 @@
     }
 
     .timeline-item.active .timeline-dot {
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         border-color: #0ea5e9;
         box-shadow: 0 0 0 4px rgba(14,165,233,0.2);
     }
@@ -181,7 +181,7 @@
 
     /* Header Pesanan */
     .pesanan-header-card {
-        background: linear-gradient(135deg, #f0f9ff, #ccfbf1);
+        background: #f0f9ff;
         border: 1px solid rgba(14,165,233,0.2);
         border-radius: 16px;
         padding: 20px;

@@ -34,6 +34,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+            // Set last_activity saat login
+            session(['last_activity' => time()]);
             return $this->redirectAfterLogin();
         }
 
@@ -79,6 +81,7 @@ class AuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+        session(['last_activity' => time()]);
 
         return redirect()->route('katalog.index')
             ->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name . '!');
@@ -96,8 +99,12 @@ class AuthController extends Controller
 
     private function redirectAfterLogin()
     {
-        if (Auth::user()->isAdmin()) {
+        $user = Auth::user();
+        if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
+        }
+        if ($user->isDriver()) {
+            return redirect()->route('driver.dashboard');
         }
         return redirect()->route('katalog.index');
     }

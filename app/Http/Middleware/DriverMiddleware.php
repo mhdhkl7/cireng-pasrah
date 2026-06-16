@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class DriverMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
@@ -14,12 +14,11 @@ class AdminMiddleware
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        if (!auth()->user()->isAdmin()) {
-            // Arahkan ke halaman yang sesuai dengan role, bukan abort
-            if (auth()->user()->isDriver()) {
-                return redirect()->route('driver.dashboard');
+        if (!auth()->user()->isDriver()) {
+            if (auth()->user()->isAdmin()) {
+                return redirect()->route('admin.dashboard');
             }
-            return redirect()->route('katalog.index')->with('error', 'Akses ditolak. Halaman ini hanya untuk admin.');
+            return redirect()->route('katalog.index')->with('error', 'Akses ditolak. Halaman ini hanya untuk driver.');
         }
 
         return $next($request);

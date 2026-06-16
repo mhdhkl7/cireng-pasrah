@@ -157,6 +157,25 @@
                     </div>
                 </div>
                 <div class="pesanan-body">
+                    {{-- Thumbnail produk --}}
+                    <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+                        @foreach($pesanan->detailPesanans->take(3) as $detail)
+                            <div style="width:44px;height:44px;border-radius:8px;overflow:hidden;background:#f0f9ff;border:1px solid #e7e5e4;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                                @if($detail->produk && $detail->produk->gambar)
+                                    <img src="{{ asset('storage/' . $detail->produk->gambar) }}" alt="{{ $detail->nama_produk }}"
+                                         style="width:100%;height:100%;object-fit:cover;">
+                                @else
+                                    <span style="font-size:1.2rem;">🍟</span>
+                                @endif
+                            </div>
+                        @endforeach
+                        @if($pesanan->detailPesanans->count() > 3)
+                            <div style="width:44px;height:44px;border-radius:8px;background:#f0f9ff;border:1px solid #e7e5e4;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#0ea5e9;">
+                                +{{ $pesanan->detailPesanans->count() - 3 }}
+                            </div>
+                        @endif
+                    </div>
+
                     <div class="pesanan-items">
                         @foreach($pesanan->detailPesanans->take(2) as $detail)
                             <div><strong>{{ $detail->nama_produk }}</strong> x{{ $detail->qty }}</div>
@@ -166,10 +185,13 @@
                         @endif
                     </div>
                     <div class="pesanan-info">
-                        <div class="pesanan-total">{{ $pesanan->total_harga_formatted }}</div>
+                        <div class="pesanan-total">{{ $pesanan->total_akhir_formatted }}</div>
+                        @if($pesanan->ongkir > 0)
+                            <div style="font-size:0.72rem;color:#78716c;">Termasuk ongkir {{ $pesanan->ongkir_formatted }}</div>
+                        @endif
                         <div class="pesanan-meta">
                             {{ $pesanan->opsi_pengiriman === 'take_away' ? '🏃 Take Away' : '🛵 Delivery' }} •
-                            {{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : '📱 Transfer' }}
+                            {{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : ($pesanan->metode_pembayaran === 'cod' ? '🚗 COD' : '📱 Transfer') }}
                         </div>
                     </div>
                     <a href="{{ route('pesanan.show', $pesanan->kode_pesanan) }}" class="btn-detail">

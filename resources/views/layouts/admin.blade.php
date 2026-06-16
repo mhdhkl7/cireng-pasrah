@@ -12,8 +12,8 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
             --primary-light: #e0f2fe;
             --secondary: #1e293b;
             --sidebar-bg: #0f172a;
@@ -31,7 +31,6 @@
             --radius: 12px;
             --shadow: 0 1px 3px rgba(2,132,199,0.1), 0 1px 2px rgba(2,132,199,0.06);
             --shadow-lg: 0 10px 15px -3px rgba(2,132,199,0.1), 0 4px 6px -2px rgba(2,132,199,0.05);
-            --gradient: linear-gradient(135deg, #0284c7, #0d9488);
         }
 
         body {
@@ -116,7 +115,7 @@
         }
 
         .sidebar-link.active {
-            background: var(--gradient);
+            background: var(--primary);
             color: #fff;
             box-shadow: 0 4px 12px rgba(2,132,199,0.3);
         }
@@ -144,7 +143,7 @@
 
         .admin-avatar {
             width: 36px; height: 36px;
-            background: var(--gradient);
+            background: var(--primary);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-weight: 700; color: #fff; font-size: 0.875rem;
@@ -288,11 +287,10 @@
         }
 
         .btn-primary {
-            background: var(--gradient);
+            background: var(--primary);
             color: #fff;
-            box-shadow: 0 2px 8px rgba(2,132,199,0.3);
         }
-        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(2,132,199,0.4); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
         .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
         .btn-secondary:hover { background: var(--border); }
@@ -514,6 +512,49 @@
         </main>
     </div>
 
+    {{-- Session Timeout Warning --}}
+    <div id="session-warning" style="display:none;position:fixed;bottom:20px;right:20px;z-index:9999;background:#0f172a;color:#fff;padding:14px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.4);font-size:0.83rem;max-width:280px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-weight:700;margin-bottom:4px;">⏰ Sesi Admin akan berakhir!</div>
+        <div>Idle selama 14 menit. Logout otomatis dalam <strong id="countdown">60</strong> detik.</div>
+        <button onclick="document.getElementById('session-warning').style.display='none'; window.resetIdle();"
+                style="margin-top:10px;width:100%;padding:7px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">
+            Tetap Login
+        </button>
+    </div>
+
     @yield('scripts')
+<script>
+(function() {
+    const IDLE_WARN_MS  = 14 * 60 * 1000;
+    const WARN_DURATION = 60;
+    let idleTimer, countdownTimer, countdown;
+    const warning = document.getElementById('session-warning');
+    const countEl = document.getElementById('countdown');
+
+    function resetIdle() {
+        clearTimeout(idleTimer);
+        clearInterval(countdownTimer);
+        if (warning) warning.style.display = 'none';
+        idleTimer = setTimeout(showWarning, IDLE_WARN_MS);
+    }
+
+    function showWarning() {
+        if (!warning) return;
+        countdown = WARN_DURATION;
+        warning.style.display = 'block';
+        countdownTimer = setInterval(function() {
+            countdown--;
+            if (countEl) countEl.textContent = countdown;
+            if (countdown <= 0) { clearInterval(countdownTimer); window.location.reload(); }
+        }, 1000);
+    }
+
+    ['mousemove','keydown','click','scroll','touchstart'].forEach(function(e) {
+        document.addEventListener(e, resetIdle, true);
+    });
+    resetIdle();
+    window.resetIdle = resetIdle;
+})();
+</script>
 </body>
 </html>

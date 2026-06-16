@@ -70,7 +70,7 @@
         width: 72px; height: 72px;
         border-radius: 10px;
         overflow: hidden;
-        background: linear-gradient(135deg, #f0f9ff, #ccfbf1);
+        background: #f0f9ff;
         flex-shrink: 0;
     }
     .item-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -134,7 +134,7 @@
     }
 
     .summary-header {
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         padding: 18px 20px;
         color: #fff;
     }
@@ -159,7 +159,7 @@
     .btn-checkout {
         width: 100%;
         padding: 14px;
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -194,7 +194,7 @@
         align-items: center;
         gap: 8px;
         padding: 12px 24px;
-        background: linear-gradient(135deg, #0ea5e9, #10b981);
+        background: var(--primary);
         color: #fff;
         border-radius: 12px;
         font-weight: 700;

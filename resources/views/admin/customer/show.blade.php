@@ -14,7 +14,7 @@
 <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;">
     <!-- Profile Card -->
     <div class="card">
-        <div style="background:linear-gradient(135deg,var(--primary),var(--primary-dark));padding:28px;text-align:center;">
+        <div style="background:var(--primary);padding:28px;text-align:center;">
             <div style="width:64px;height:64px;background:rgba(255,255,255,0.2);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.75rem;font-weight:800;color:#fff;margin-bottom:10px;">
                 {{ strtoupper(substr($user->name, 0, 1)) }}
             </div>
