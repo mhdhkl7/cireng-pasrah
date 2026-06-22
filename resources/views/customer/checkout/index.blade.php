@@ -361,7 +361,6 @@
 
 @section('scripts')
 <script>
-<script>
 const SUBTOTAL = {{ $subtotal }};
 let currentOngkir = 0;
 
