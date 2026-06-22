@@ -453,5 +453,11 @@ function showFileName(input) {
     const name = input.files[0]?.name;
     if (name) document.getElementById('file-name').textContent = '✅ ' + name;
 }
+
+// Inisialisasi state saat halaman dimuat (untuk menangani old input setelah validasi gagal)
+window.addEventListener('DOMContentLoaded', () => {
+    onPengirimanChange();
+    onPaymentChange();
+});
 </script>
 @endsection

@@ -320,7 +320,7 @@
                 @endif
                 <div class="info-row">
                     <span class="info-key">Pembayaran</span>
-                    <span class="info-val">{{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : '📱 Transfer' }}</span>
+                    <span class="info-val">{{ $pesanan->metode_pembayaran === 'cash' ? '💵 Cash' : ($pesanan->metode_pembayaran === 'cod' ? '🚗 COD' : '📱 Transfer') }}</span>
                 </div>
                 <div class="info-row">
                     <span class="info-key">Status Bayar</span>
