@@ -176,11 +176,6 @@
             @if($pesanan->jarak_meter)
                 <div style="font-size:0.75rem;color:#78716c;">📏 {{ number_format($pesanan->jarak_meter/1000,2) }} km • Ongkir: {{ $pesanan->ongkir_formatted }}</div>
             @endif
-            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($pesanan->alamat_pengiriman) }}"
-               target="_blank"
-               style="display:inline-flex;align-items:center;gap:4px;margin-top:10px;padding:6px 12px;background:#4285f4;color:#fff;border-radius:8px;text-decoration:none;font-size:0.75rem;font-weight:600;">
-                🗺️ Google Maps
-            </a>
         </div>
     </div>
 </div>

@@ -215,15 +215,17 @@
                     @error('alamat_pengiriman') <div class="form-error">{{ $message }}</div> @enderror
                 </div>
 
-                <div style="margin-bottom:10px;">
-                    <button type="button" onclick="hitungJarak()" id="btn-hitung"
-                            style="padding:9px 18px;background:linear-gradient(135deg,#0ea5e9,#10b981);color:#fff;border:none;border-radius:10px;font-size:0.83rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;">
-                        📏 Hitung Jarak & Ongkir
-                    </button>
-                    <span id="loading-text" style="display:none;font-size:0.8rem;color:#78716c;margin-left:10px;">Menghitung...</span>
+                <div class="form-group" style="margin-top:14px;">
+                    <label class="form-label">Perkiraan Jarak Pengiriman (Meter) <span class="required">*</span></label>
+                    <div style="display:flex;gap:10px;align-items:center;">
+                        <input type="number" id="jarak_meter_input" class="form-control" placeholder="Contoh: 2500 (untuk 2.5 km)" min="1" value="{{ old('jarak_meter') }}" style="flex:1;">
+                        <button type="button" onclick="hitungOngkirManual()" id="btn-hitung"
+                                style="padding:11px 18px;background:linear-gradient(135deg,#0ea5e9,#10b981);color:#fff;border:none;border-radius:10px;font-size:0.83rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;">
+                            📏 Hitung Ongkir
+                        </button>
+                    </div>
+                    <div style="font-size:0.75rem;color:#78716c;margin-top:6px;">Masukkan perkiraan jarak dari toko kami ke lokasi Anda dalam satuan <strong>meter</strong>.</div>
                 </div>
-
-                <div id="map"></div>
 
                 <div class="ongkir-info" id="ongkir-info">
                     <div id="ongkir-text"></div>
@@ -359,100 +361,23 @@
 
 @section('scripts')
 <script>
-const MAPS_API_KEY = '{{ env("GOOGLE_MAPS_API_KEY", "") }}';
-const STORE_LAT    = {{ env('STORE_LAT', -6.200000) }};
-const STORE_LNG    = {{ env('STORE_LNG', 106.816666) }};
-const SUBTOTAL     = {{ $subtotal }};
-
-let map, markerUser, markerStore, directionsRenderer, directionsService;
+<script>
+const SUBTOTAL = {{ $subtotal }};
 let currentOngkir = 0;
 
-// ── Inisialisasi Google Maps ─────────────────────────────
-function initMap() {
-    const storePos = { lat: STORE_LAT, lng: STORE_LNG };
+function hitungOngkirManual() {
+    const jarakInput = document.getElementById('jarak_meter_input').value;
+    const jarakMeter = parseInt(jarakInput);
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: storePos,
-        zoom: 14,
-        mapTypeControl: false,
-    });
-
-    markerStore = new google.maps.Marker({
-        position: storePos,
-        map,
-        title: 'Cireng Pasrah (Toko)',
-        label: '🏪',
-        icon: { url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' },
-    });
-
-    directionsService  = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: false });
-    directionsRenderer.setMap(map);
-}
-
-// ── Hitung Jarak via Directions API ─────────────────────
-function hitungJarak() {
-    const alamat = document.getElementById('alamat_pengiriman').value.trim();
-    if (!alamat) {
-        alert('Isi alamat pengiriman terlebih dahulu!');
+    if (!jarakMeter || jarakMeter <= 0) {
+        alert('Masukkan jarak dalam meter yang valid! Contoh: 2500');
         return;
     }
 
-    document.getElementById('loading-text').style.display = 'inline';
-    document.getElementById('btn-submit').disabled = true;
+    const btn = document.getElementById('btn-hitung');
+    btn.disabled = true;
+    btn.textContent = 'Menghitung...';
 
-    // Jika API key tersedia, gunakan Directions API
-    if (MAPS_API_KEY && directionsService) {
-        const req = {
-            origin: new google.maps.LatLng(STORE_LAT, STORE_LNG),
-            destination: alamat,
-            travelMode: google.maps.TravelMode.DRIVING,
-        };
-
-        directionsService.route(req, function(result, status) {
-            document.getElementById('loading-text').style.display = 'none';
-            if (status === google.maps.DirectionsStatus.OK) {
-                directionsRenderer.setDirections(result);
-                const jarak = result.routes[0].legs[0].distance.value; // meters
-                setOngkir(jarak, result.routes[0].legs[0].distance.text);
-            } else {
-                alert('Gagal menghitung rute. Periksa alamat Anda.');
-                document.getElementById('btn-submit').disabled = false;
-            }
-        });
-    } else {
-        // Fallback: gunakan Geocoding + hitung jarak langsung (estimasi)
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ address: alamat }, function(results, status) {
-            document.getElementById('loading-text').style.display = 'none';
-            if (status === google.maps.GeocoderStatus.OK) {
-                const dest = results[0].geometry.location;
-                const jarakKm = haversineKm(STORE_LAT, STORE_LNG, dest.lat(), dest.lng());
-                const jarak   = Math.round(jarakKm * 1000);
-
-                if (markerUser) markerUser.setMap(null);
-                markerUser = new google.maps.Marker({ position: dest, map, title: 'Lokasi Anda' });
-                map.setCenter(dest);
-                map.setZoom(13);
-
-                setOngkir(jarak, jarakKm.toFixed(1) + ' km');
-            } else {
-                alert('Alamat tidak ditemukan. Coba lebih spesifik.');
-                document.getElementById('btn-submit').disabled = false;
-            }
-        });
-    }
-}
-
-function haversineKm(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-
-function setOngkir(jarakMeter, jarakLabel) {
     document.getElementById('jarak_meter').value = jarakMeter;
 
     // Fetch ongkir dari server
@@ -466,8 +391,10 @@ function setOngkir(jarakMeter, jarakLabel) {
         currentOngkir = data.ongkir;
         const ongkirEl = document.getElementById('ongkir-info');
         ongkirEl.style.display = 'block';
+
+        const jarakKm = (jarakMeter / 1000).toFixed(1);
         document.getElementById('ongkir-text').innerHTML =
-            `📏 Jarak: <strong>${jarakLabel}</strong> &nbsp;|&nbsp; 🚗 Ongkir: <strong>${data.ongkir_formatted}</strong>`;
+            `📏 Jarak: <strong>${jarakKm} km</strong> &nbsp;|&nbsp; 🚗 Ongkir: <strong>${data.ongkir_formatted}</strong>`;
 
         // Update summary
         document.getElementById('ongkir-row').style.display = 'flex';
@@ -475,6 +402,14 @@ function setOngkir(jarakMeter, jarakLabel) {
         const total = SUBTOTAL + currentOngkir;
         document.getElementById('total-display').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
         document.getElementById('btn-submit').disabled = false;
+    })
+    .catch(err => {
+        alert('Terjadi kesalahan saat menghitung ongkir.');
+        console.error(err);
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '📏 Hitung Ongkir';
     });
 }
 
@@ -487,15 +422,20 @@ function onPengirimanChange() {
     if (val === 'delivery') {
         mapSection.style.display = 'block';
         codOpt.style.display = 'flex'; // show COD option
+        document.getElementById('btn-submit').disabled = true; // Force user to calculate ongkir
     } else {
         mapSection.style.display = 'none';
         codOpt.style.display = 'none'; // hide COD for take away
+        
         // Reset ongkir
         currentOngkir = 0;
         document.getElementById('jarak_meter').value = 0;
+        document.getElementById('jarak_meter_input').value = '';
         document.getElementById('ongkir-row').style.display = 'none';
         document.getElementById('total-display').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(SUBTOTAL);
         document.getElementById('ongkir-info').style.display = 'none';
+        document.getElementById('btn-submit').disabled = false; // Enable submit
+
         // If COD was selected, deselect
         const codInput = document.querySelector('input[name=metode_pembayaran][value=cod]');
         if (codInput && codInput.checked) codInput.checked = false;
@@ -514,19 +454,5 @@ function showFileName(input) {
     const name = input.files[0]?.name;
     if (name) document.getElementById('file-name').textContent = '✅ ' + name;
 }
-
-// Load Google Maps API
-(function loadMapsScript() {
-    if (!MAPS_API_KEY) {
-        // No API key: initialize with basic map only
-        document.getElementById('map').style.background = '#e7e5e4';
-        document.getElementById('map').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#78716c;font-size:0.83rem;flex-direction:column;gap:8px;"><div style="font-size:2rem;">🗺️</div><div>Google Maps API key belum dikonfigurasi di .env<br>(GOOGLE_MAPS_API_KEY)</div></div>';
-        return;
-    }
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&callback=initMap`;
-    script.async = true;
-    document.head.appendChild(script);
-})();
 </script>
 @endsection

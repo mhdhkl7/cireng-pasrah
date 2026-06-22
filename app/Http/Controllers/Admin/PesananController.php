@@ -69,7 +69,7 @@ class PesananController extends Controller
     public function updateStatus(Request $request, Pesanan $pesanan)
     {
         $request->validate([
-            'status'             => 'required|in:' . implode(',', self::ADMIN_STATUSES),
+            'status'             => 'required|in:' . implode(',', self::ALL_STATUSES),
             'status_pembayaran'  => 'required|in:belum_dibayar,lunas',
             'catatan_pembatalan' => 'nullable|string|max:500',
         ]);

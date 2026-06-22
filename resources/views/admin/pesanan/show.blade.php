@@ -314,6 +314,10 @@
                             <option value="pending"          {{ $pesanan->status === 'pending'          ? 'selected' : '' }}>🕐 Pending</option>
                             <option value="diproses"         {{ $pesanan->status === 'diproses'         ? 'selected' : '' }}>👩‍🍳 Diproses</option>
                             <option value="siap"             {{ $pesanan->status === 'siap'             ? 'selected' : '' }}>✅ Siap (→ pool driver jika delivery)</option>
+                            <option value="mencari_driver"   {{ $pesanan->status === 'mencari_driver'   ? 'selected' : '' }}>🔍 Mencari Driver (Pool)</option>
+                            <option value="driver_menuju_resto" {{ $pesanan->status === 'driver_menuju_resto' ? 'selected' : '' }}>🛵 Driver Menuju Resto</option>
+                            <option value="tiba_di_resto"    {{ $pesanan->status === 'tiba_di_resto'    ? 'selected' : '' }}>🏪 Driver di Resto</option>
+                            <option value="sedang_mengantar" {{ $pesanan->status === 'sedang_mengantar' ? 'selected' : '' }}>🚗 Sedang Diantar</option>
                             <option value="selesai"          {{ $pesanan->status === 'selesai'          ? 'selected' : '' }}>🎉 Selesai</option>
                             <option value="dibatalkan"       {{ $pesanan->status === 'dibatalkan'       ? 'selected' : '' }}>❌ Dibatalkan</option>
                             <option value="tidak_diambil"   {{ $pesanan->status === 'tidak_diambil'   ? 'selected' : '' }}>📦 Tidak Diambil</option>
